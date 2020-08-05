@@ -116,8 +116,8 @@ DISTNAME = 'python_tutorial' #'YOUR DISTRIBTUION NAME (I.E. PIP INSTALL DISTNAME
 AUTHOR = 'Scott Coughlin'
 AUTHOR_EMAIL = 'scottcoughlin2014@u.northwestern.edu'
 LICENSE = 'GPLv3+'
-DESCRIPTION = 'MY DESCRIPTION'
-GITHUBURL = 'https://github.com/CIERA-Northwestern/template.git'
+DESCRIPTION = 'CIERA Python Tutorial'
+GITHUBURL = 'https://github.com/CIERA-Northwestern/python_tutorial.git'
 
 setup(name=DISTNAME,
       provides=[PACKAGENAME],
