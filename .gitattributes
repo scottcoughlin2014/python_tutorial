@@ -1,1 +1,1 @@
-YOURPACKAGE/_version.py export-subst
+python_tutorial/_version.py export-subst
