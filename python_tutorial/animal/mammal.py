@@ -44,7 +44,7 @@ class Mammal(Animal):
         attr2 (:obj:`int`, optional): Description of `attr2`.
 
     """
-    def __init__(self):
+    def __init__(self, pet):
         """Example of docstring on the __init__ method.
 
         The __init__ method may be documented in either the class level
@@ -58,6 +58,7 @@ class Mammal(Animal):
 
         """
         super().__init__(vertebrate=True, warm_blooded=True)
+        self.pet = pet
 
     def example_method(self, param1, param2):
         """Class methods are similar to regular functions.

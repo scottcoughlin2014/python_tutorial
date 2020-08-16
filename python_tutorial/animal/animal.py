@@ -29,8 +29,6 @@ __author__ = 'Scott Coughlin <scottcoughlin2014@u.northwestern.edu>'
 __credits__ = 'Scott Coughlin <scottcoughlin2014@u.northwestern.edu>'
 __all__ = ['Animal']
 
-
-
 class Animal:
     """This class contains methods and properties asscoaited with all animals
 
@@ -61,8 +59,24 @@ class Animal:
             warm_blooded (bool): Is this animal warm blooded or not 
 
         """
+        self._vertebrate = vertebrate
         self.vertebrate = vertebrate
         self.warm_blooded = warm_blooded
+
+    @property
+    def vertebrate(self):
+        return self._vertabrate
+
+    @vertebrate.setter
+    def vertebrate(self, value):
+        from .mammal import Mammal
+        if isinstance(self, Mammal) and (value == False):
+            raise ValueError("Mammals cannot be invertebrate")
+        self._vertabrate = value
+        if value:
+            self._vertebrate_str = 'vertebrate'
+        else:
+            self._vertebrate_str = 'invertebrate'
 
     def __str__(self):
         return "This animal is {0}".format(self._vertebrate_str)
@@ -84,7 +98,7 @@ class Animal:
             True if successful, False otherwise.
 
         """
-        return True
+        return self.vertebrate* param1 + self.warm_blooded * param2
 
     @classmethod
     def example_class_method(cls, param1, param2):
@@ -104,10 +118,10 @@ class Animal:
             True if successful, False otherwise.
 
         """
-        return True
+        return param1 * param2
 
     @staticmethod
-    def example_static_method(cparam1, param2):
+    def example_static_method(param1, param2):
         """static methods are similar to regular functions.
 
         A static method is a method that is bound to a class rather than
@@ -130,4 +144,4 @@ class Animal:
             True if successful, False otherwise.
 
         """
-        return True
+        return param1 * param2
