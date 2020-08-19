@@ -26,6 +26,7 @@ import glob
 import os.path
 
 from setuptools import (setup, find_packages)
+from distutils.extension import Extension
 
 cmdclass = {}
 
@@ -36,15 +37,11 @@ __version__ = versioneer.get_version()
 cmdclass.update(versioneer.get_cmdclass())
 
 # ONLY IF WRAPPING C C++ OR FORTRAN
-"""
-from distutils.command.sdist import sdist
 try:
-    from numpy.distutils.core import setup, Extension
+    from Cython.Build import cythonize
+    import numpy
 except ImportError:
-    raise ImportError("Building fortran extensions requires numpy.")
-
-cmdclass["sdist"] = sdist
-"""
+    raise ImportError("Building c++ extensions requires Cython and numpy")
 
 # -- documentation ------------------------------------------------------------
 
@@ -65,6 +62,7 @@ with open('README.md', 'rb') as f:
 setup_requires = [
     'setuptools',
     'pytest-runner',
+    'numpy',
 ]
 
 # These pretty common requirement are commented out. Various syntax types
@@ -72,9 +70,10 @@ setup_requires = [
 # packages that are compatbile with your software.
 install_requires = [
     'numpy >= 1.16',
+    'cython>=0.29.5',
     #'pyblast @ https://github.com/CIERA-Northwestern/pyblast/tarball/master',
     #'scipy >= 0.12.1',
-    #'matplotlib >= 1.2.0, != 2.1.0, != 2.1.1',
+    'matplotlib >= 1.2.0, != 2.1.0, != 2.1.1',
     #'astropy >= 1.1.1, < 3.0.0 ; python_version < \'3\'',
     #'astropy >= 1.1.1 ; python_version >= \'3\'',
     #'configparser',
@@ -95,14 +94,18 @@ extras_require = {
         'sphinx_rtd_theme',
         'sphinxcontrib_programoutput',
     ],
-    'ml': ['theano'],
+#    'ml': ['theano'],
 }
 
-# ONLY IF WRAPPING C C++ OR FORTRAN
-"""
-# fortran compile
-wrapper = Extension('cosmic._evolvebin', sources=['cosmic/src/comenv.f', 'cosmic/src/corerd.f', 'cosmic/src/deltat.f', 'cosmic/src/dgcore.f', 'cosmic/src/evolv2.f', 'cosmic/src/gntage.f', 'cosmic/src/hrdiag.f', 'cosmic/src/instar.f', 'cosmic/src/kick.f', 'cosmic/src/mix.f', 'cosmic/src/mlwind.f', 'cosmic/src/mrenv.f', 'cosmic/src/ran3.f', 'cosmic/src/rl.f', 'cosmic/src/star.f', 'cosmic/src/zcnsts.f', 'cosmic/src/zfuncs.f', 'cosmic/src/concatkstars.f', 'cosmic/src/bpp_array.f'], extra_compile_args = ["-g"], )#extra_f77_compile_args=["-O0"], extra_f90_compile_args=["-O0"])
-"""
+# WRAP C++
+extensions = [
+    Extension("python_tutorial.rectangle.rectangle",
+              sources=["python_tutorial/rectangle/src/rect.pyx", "python_tutorial/rectangle/src/Rectangle.cpp"],
+              include_dirs=[numpy.get_include(), 'python_tutorial/rectangle/src/'],
+              extra_compile_args=['-std=c++11'],
+              language='c++'
+              ),
+]
 
 # -- run setup ----------------------------------------------------------------
 
@@ -125,7 +128,7 @@ setup(name=DISTNAME,
       description=DESCRIPTION,
       long_description=longdesc,
       long_description_content_type='text/markdown',
-      #ext_modules = [wrapper], ONLY IF WRAPPING C C++ OR FORTRAN
+      ext_modules = cythonize(extensions), # WRAPPING C++
       author=AUTHOR,
       author_email=AUTHOR_EMAIL,
       license=LICENSE,
@@ -138,14 +141,13 @@ setup(name=DISTNAME,
       install_requires=install_requires,
       tests_require=tests_require,
       extras_require=extras_require,
-      python_requires='!=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4',
-      use_2to3=True,
+      python_requires='>3.5, <4',
       classifiers=[
           'Development Status :: 4 - Beta',
           'Programming Language :: Python',
-          'Programming Language :: Python :: 3.5',
           'Programming Language :: Python :: 3.6',
           'Programming Language :: Python :: 3.7',
+          'Programming Language :: Python :: 3.8',
           'Intended Audience :: Science/Research',
           'Intended Audience :: End Users/Desktop',
           'Intended Audience :: Science/Research',
@@ -156,6 +158,6 @@ setup(name=DISTNAME,
           'Operating System :: POSIX',
           'Operating System :: Unix',
           'Operating System :: MacOS',
-          'License :: OSI Approved :: GNU General Public License v3 (GPLv3+)',
+          'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
       ],
 )
