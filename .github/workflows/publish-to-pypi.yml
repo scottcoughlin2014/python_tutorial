@@ -55,7 +55,7 @@ jobs:
     - name: Build manylinux Python wheels
       uses: RalfG/python-wheels-manylinux-build@v0.2.2-manylinux2010_x86_64
       with:
-        build-requirements: 'numpy'
+        build-requirements: 'numpy cython'
         system-packages: 'hdf5 gcc-gfortran'
         package-path: ''
         pip-wheel-args: '--no-deps'
