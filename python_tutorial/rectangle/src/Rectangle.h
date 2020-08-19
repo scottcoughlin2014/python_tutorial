@@ -9,6 +9,7 @@ namespace shapes {
             Rectangle(int x0, int y0, int x1, int y1);
             ~Rectangle();
             int getArea();
+            void halfRect();
             void getSize(int* width, int* height);
             void move(int dx, int dy);
     };

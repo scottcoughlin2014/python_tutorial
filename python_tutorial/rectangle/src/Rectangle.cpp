@@ -18,9 +18,17 @@ namespace shapes {
     Rectangle::~Rectangle () {}
 
     // Return the area of the rectangle
+    void Rectangle::halfRect () {
+        this->x0 = this->x0 /2;
+        this->x1 = this->x1 /2;
+        this->y0 = this->y0 /2;
+        this->y1 = this->y1 /2;
+    }
+
     int Rectangle::getArea () {
         return (this->x1 - this->x0) * (this->y1 - this->y0);
     }
+
 
     // Get the size of the rectangle.
     // Put the size in the pointer args

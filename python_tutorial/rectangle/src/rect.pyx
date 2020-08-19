@@ -21,6 +21,15 @@ cdef class PyRectangle:
     def move(self, dx, dy):
         self.c_rect.move(dx, dy)
 
+    def half_rect(self):
+        self.c_rect.halfRect()
+
+    def half_rect_python(self):
+        self.c_rect.x0 = self.c_rect.x0 /2
+        self.c_rect.x1 = self.c_rect.x1 /2
+        self.c_rect.y1 = self.c_rect.y1 /2
+        self.c_rect.y0 = self.c_rect.y0 /2
+
     def plot(self, **kwargs):
         """plot your rectangle
 
