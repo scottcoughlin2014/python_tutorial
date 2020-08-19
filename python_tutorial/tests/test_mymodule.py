@@ -19,8 +19,8 @@
 """Unit test for python_tutorial.YOURMODULE classes
 """
 
-from python_tutorial.mymodule.mymodule import MyModule
+from python_tutorial.rectangle import PyRectangle
 
-class TestMyModule(object):
-    def test_myclass(self):
-        assert 1 == MyModule().return_one()
+class TestPyRectangle(object):
+    def test_get_area(self):
+        assert 4 == PyRectangle(0,0,2,2).get_area()
