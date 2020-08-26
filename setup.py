@@ -105,6 +105,13 @@ extensions = [
               extra_compile_args=['-std=c++11'],
               language='c++'
               ),
+    Extension("python_tutorial.timeseries.timeseries",
+              sources=["python_tutorial/timeseries/src/ts.pyx", "python_tutorial/timeseries/src/TimeSeries.cpp"],
+              include_dirs=[numpy.get_include(), 'python_tutorial/timeseries/src/'],
+              extra_compile_args=['-std=c++11'],
+              language='c++'
+              ),
+
 ]
 
 # -- run setup ----------------------------------------------------------------
@@ -128,7 +135,7 @@ setup(name=DISTNAME,
       description=DESCRIPTION,
       long_description=longdesc,
       long_description_content_type='text/markdown',
-      ext_modules = cythonize(extensions), # WRAPPING C++
+      ext_modules = cythonize(extensions, compiler_directives={'language_level' : "3"}), # WRAPPING C++
       author=AUTHOR,
       author_email=AUTHOR_EMAIL,
       license=LICENSE,
